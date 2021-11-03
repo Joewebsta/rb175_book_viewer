@@ -8,13 +8,15 @@ get '/' do
   @title = 'The Adventures of Sherlock Holmes'
   @contents = File.readlines('data/toc.txt')
 
-  erb :home
+  erb :home # layout: :layout
 end
 
-get '/chapters/1' do
-  @title = 'Chapter 1'
+get '/chapters/:number' do
   @contents = File.readlines('data/toc.txt')
-  @chapter = File.read('data/chp1.txt')
 
-  erb :chapter
+  number = params[:number]
+  @title = "Chapter #{number}"
+  @chapter = File.read("data/chp#{number}.txt")
+
+  erb :chapter # layout: :layout
 end
