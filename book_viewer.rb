@@ -26,6 +26,22 @@ get '/chapters/:number' do
   erb :chapter # layout: :layout
 end
 
+get '/search' do
+  chapter_files_paths = Dir.glob('data/chp*') # .map { |path| File.basename(path) }
+  @search_term = params[:query]
+
+  matching_files = chapter_files_paths.select do |path|
+    chapter_text = File.read(path)
+    chapter_text.include?(@search_term)
+  end
+
+  @matching_chap_nums = matching_files.map do |file|
+    file.gsub(/\D/, '').to_i
+  end
+
+  erb :search
+end
+
 not_found do
   redirect '/'
 end
