@@ -67,4 +67,8 @@ helpers do
 
     results
   end
+
+  def highlight(para_text, term)
+    para_text.gsub(term, "<strong>#{term}</strong>")
+  end
 end
